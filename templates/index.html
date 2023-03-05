@@ -3,9 +3,86 @@
 
 {% block content %}
 
-    <h1>My First Heading</h1>
+<h1>My First Heading</h1>
 
-    <p>My first paragraph.</p>
+<p>My first paragraph.</p>
+
+<input type="email" id="email" placeholder="Email Address" />
+<input type="text" id="name" placeholder="Enter your name" />
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for product in products %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div>
+                        <img src="{{ product.image }}" alt="Nothing">
+                    </div>
+
+                    <div class="card-body">
+                        <h2>{{ product.title }}</h2>
+                        <p class="card-text">{{ product.description }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p>Pay with Bitcoin</p>
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        Increase the amount of money you want to pay with Bitcoin and see your name on the leaderboard 
+                        <br>
+                        <br>
+                        <input type="number" id="Money{{ product.productId }}" placeholder="Amount of Money" value="{{ product.price }}" />
+                        <button type="submit"  onclick="check('{{ product.productId }}')">Pay with Bitcoin</button>
+                        <b><span id="bitcoinpay{{ product.productId }}"></span></b>
+                    </div>
+                </div>
+                
+            <br>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<script src="https://blockonomics.co/js/pay_widget.js"></script>
+<script>
+    function pay(email, amount, name,n,ImageName) {
+
+        Blockonomics.widget({
+            msg_area: 'bitcoinpay'+n,
+            uid: '0f938c735d9f4fed',
+            email: email,
+            amount: amount,
+            name: name,
+            ImageName: n
+        });
+
+
+    }
+
+    function check(n) {
+        var email = document.getElementById('email').value;
+        var amount = document.getElementById('Money'+n).value;
+        var name = document.getElementById('name').value;
+
+        if (email == "" || amount == "" || name == "") {
+            alert("Please fill all the fields");
+            return 
+        }
+
+        if (amount < 0 || amount == 0) {
+            alert("Please enter a valid amount");
+            console.log(amount)
+            return 
+        }
+        else {
+            console.log(email, amount, name,n)
+            pay(email, amount, name,n);
+        }
+    }
+
+
+</script>
+</div>
+
 
 {% endblock %}
-

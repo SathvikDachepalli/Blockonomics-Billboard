@@ -4,6 +4,13 @@ from django.http import HttpResponse
 import json
 
 
+
 def home(request):
-    products=NFTImages.objects.all()
+    print(request.method)
+    if request.method == "POST":
+        data = request.POST
+        print(data)
+    products=NFTImages.objects.all().values()
     return render(request,'index.html',context={'products':products})
+
+
