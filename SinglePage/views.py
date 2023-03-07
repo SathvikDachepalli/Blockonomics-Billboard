@@ -20,19 +20,22 @@ def home(request):
         invoice.price=data['amount']
         invoice.date=datetime.today()
         invoice.status=0
-        # invoice.save()
+        invoice.save()
 
         user=User()
+        if User.objects.filter(email=data['email']).exists():
+            setof=User.objects.filter(email=data['email']).values('MoneySpent')
+            sum=0
+            for x in setof:
+                sum+=x["MoneySpent"] 
+            User.objects.filter(email=data['email']).update(MoneySpent=sum+float(data['amount']))
+            return HttpResponse("Success")
+
+
         user.username=data['name']
         user.email=data['email']
-        setof=User.objects.filter(email=data['email']).values('MoneySpent')
-        sum=0
-        for x in setof:
-            sum+=x["MoneySpent"] 
-        print(sum)
-        # # previous_purchase=0 if user.MoneySpent==None else User.objects.get(email=data['email']).MoneySpent
-        user.MoneySpent=data['amount']
-        # user.save()
+        user.MoneySpent=float(data['amount'])
+        user.save()
 
         print(data)
 
@@ -41,6 +44,3 @@ def home(request):
     return render(request,'index.html',context={'products':products,'data':data})
 
 
-# <QueryDict: {'pk': ['1'], 'amount': ['66.4'], 'email': ['dachepallisathvik@gmail.com'], 
-# 'name': ['Sathvik'], 
-# 'csrfmiddlewaretoken': ['t3R6IQJozpf12BsGpDqhYIQRrNnyDT2HBL2e7Rw6MSbtNKhPAYtfMBmyGC64Cpvg']}>
