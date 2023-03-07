@@ -7,81 +7,116 @@
 
 <p>My first paragraph.</p>
 
-<input type="email" id="email" placeholder="Email Address" />
-<input type="text" id="name" placeholder="Enter your name" />
+<input type="email" name="email" id="email" placeholder="Email Address" />
+<input type="text" name="name" id="name" placeholder="Enter your name" />
 <div class="album py-5 bg-light">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for product in products %}
-            <div class="col">
-                <div class="card shadow-sm">
-                    <div>
-                        <img src="{{ product.image }}" alt="Nothing">
-                    </div>
+            <form class="col" method="post" id="task-form{{ product.productId }}" style="display: flex;">{% csrf_token %}
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div>
+                            <img src="{{ product.image }}" alt="Nothing">
+                        </div>
 
-                    <div class="card-body">
-                        <h2>{{ product.title }}</h2>
-                        <p class="card-text">{{ product.description }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p>Pay with Bitcoin</p>
+                        <div class="card-body">
+                            <h2>{{ product.title }}</h2>
+                            <p class="card-text">{{ product.description }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p>Pay with Bitcoin</p>
+                            </div>
+                        </div>
+
+                        <div class="container">
+                            Increase the amount of money you want to pay with Bitcoin and see your name on the leader board
+                            <br>
+                            <br>
+                            <div class="btn-group">
+                                <input type="number" name="amount{{ product.product }}"
+                                    id="Money{{ product.productId }}" placeholder="Amount of Money"
+                                    style="width: fit-content; height: 30px" value="{{ product.price }}" />
+                                <button onclick="check('{{ product.productId }}')"
+                                    style="width: fit-content; height: fit-content;">Pay with Bitcoin</button>
+                            </div>
+                            <b><span id="bitcoinpay{{ product.productId }}"></span></b>
                         </div>
                     </div>
-
-                    <div class="container">
-                        Increase the amount of money you want to pay with Bitcoin and see your name on the leaderboard 
-                        <br>
-                        <br>
-                        <input type="number" id="Money{{ product.productId }}" placeholder="Amount of Money" value="{{ product.price }}" />
-                        <button type="submit"  onclick="check('{{ product.productId }}')">Pay with Bitcoin</button>
-                        <b><span id="bitcoinpay{{ product.productId }}"></span></b>
-                    </div>
-                </div>
-                
-            <br>
-            </div>
-            {% endfor %}
+                    <br>
+            </form>
         </div>
+        {% endfor %}
     </div>
 </div>
-<script src="https://blockonomics.co/js/pay_widget.js"></script>
-<script>
-    function pay(email, amount, name,n,ImageName) {
+</div>
 
+
+<script src="https://blockonomics.co/js/pay_widget.js"></script>
+<script src="https://www.blockonomics.co/js/pay_button.js"></script>
+<script>
+    function pay(email, amount, name, n) {
+        var i = 0;
         Blockonomics.widget({
-            msg_area: 'bitcoinpay'+n,
+            msg_area: 'bitcoinpay' + n,
             uid: '0f938c735d9f4fed',
             email: email,
             amount: amount,
             name: name,
             ImageName: n
+        }); 
+        $('#task-form' + n,).on('submit', function (e) {
+            e.preventDefault();
+            if (i < 1) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "home" %}',
+                    data:
+                    {
+                        pk: n,
+                        amount: amount,
+                        email: $('input[name=email]').val(),
+                        name: $('input[name=name]').val(),
+                        status: $('input[name=status]').val(),
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success: function () {
+                        alert('Saved');
+                        i = i + 1;
+                    },
+                    error: function () {
+                        alert('Failed');
+                    }
+                });
+            }
         });
-
-
     }
+
+
 
     function check(n) {
         var email = document.getElementById('email').value;
-        var amount = document.getElementById('Money'+n).value;
+        var amount = document.getElementById('Money' + n).value;
         var name = document.getElementById('name').value;
 
         if (email == "" || amount == "" || name == "") {
             alert("Please fill all the fields");
-            return 
+            return
         }
 
         if (amount < 0 || amount == 0) {
             alert("Please enter a valid amount");
             console.log(amount)
-            return 
+            return
         }
         else {
-            console.log(email, amount, name,n)
-            pay(email, amount, name,n);
+            console.log(email, amount, name, n)
+            pay(email, amount, name, n);
         }
     }
-
-
 </script>
+
+
+
 </div>
 
 

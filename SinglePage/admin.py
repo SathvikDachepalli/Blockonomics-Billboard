@@ -9,7 +9,7 @@ class InvoiceAdmin(admin.ModelAdmin):
     list_display = ('image', 'invoiceId', 'productId', 'address', 'buyer', 'price', 'date', 'status')
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('user_id', 'username', 'walletID')
+    list_display = ('user_id', 'username', 'email', 'MoneySpent')
 
 admin.site.register(NFTImages, NFTImagesAdmin)
 admin.site.register(Invoice, InvoiceAdmin)

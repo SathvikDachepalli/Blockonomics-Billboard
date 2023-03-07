@@ -25,7 +25,8 @@ class Invoice(models.Model):
 
 class User(models.Model):
     user_id=models.AutoField(primary_key=True)
-    username=models.CharField(max_length=100)
-    walletID=models.CharField(max_length=100)
+    username=models.CharField(max_length=100, blank=False, null=False)
+    email=models.EmailField(max_length=254,default="example@gmail.com",blank=False, null=False)
+    MoneySpent=models.FloatField(default=0,blank=False, null=False)
     def __str__(self):
         return self.username
