@@ -25,10 +25,10 @@ def home(request):
         user=User()
         if User.objects.filter(email=data['email']).exists():
             setof=User.objects.filter(email=data['email']).values('MoneySpent')
-            sum=0
+            add=0
             for x in setof:
-                sum+=x["MoneySpent"] 
-            User.objects.filter(email=data['email']).update(MoneySpent=sum+float(data['amount']))
+                add+=x["MoneySpent"] 
+            User.objects.filter(email=data['email']).update(MoneySpent=add+float(data['amount']))
             return HttpResponse("Success")
 
 
@@ -40,7 +40,21 @@ def home(request):
         print(data)
 
         return HttpResponse("Success")
-    
-    return render(request,'index.html',context={'products':products,'data':data})
+    name=None
+    if Invoice.objects.filter(status=2).exists():
+        filteredset=Invoice.objects.filter(status=2)
+
+        print(filteredset)
+
+        getset={x['buyer']:[] for x in filteredset.values('buyer','price')}
+
+        for x in filteredset.values('buyer','price'):
+            getset[x['buyer']].append(x['price'])
+
+        for x in getset:
+            getset[x]=sum(getset[x])
+        name=max(getset,key=getset.get)
+        print(getset)
+    return render(request,'index.html',context={'products':products,'data':data,'name':name})
 
 

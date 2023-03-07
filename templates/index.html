@@ -2,11 +2,32 @@
 
 
 {% block content %}
+{% load static %}
+<nav class="navbar navbar-light bg-light">
+    <img src= 'https://cdn3d.iconscout.com/3d/premium/thumb/nft-logo-6708909-5526657.png' class="d-inline-block align-top" style="width:100px">
+    <a class="navbar-brand" style="text-align: center;" href="#">
+        My NFT Image Store
+    </a>
+</nav>
+<div class="jumbotron text-lg-center">
 
+    {% if name %}
+    <p style="background-color: green; color: white;"> {{ name }} is the highest bidder of our website </p>
+    {% else %}
+    <p style="background-color: green; color: white;">  You can be the first person </p>
+    {% endif %}
+    
+    Increase the amount of money you want to pay with Bitcoin and see your name on the leader board
+    <br/>
+    <br/>
+    
+    
+    <div class="container center" style="justify-items: center;">
+        <input type="email" name="email" id="email" placeholder="Email Address" />
+        <input type="text" name="name" id="name" placeholder="Enter your name" />
+    </div>
+</div>
 
-
-<input type="email" name="email" id="email" placeholder="Email Address" />
-<input type="text" name="name" id="name" placeholder="Enter your name" />
 <div class="album py-5 bg-light">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -15,7 +36,7 @@
                 <div class="col">
                     <div class="card shadow-sm">
                         <div>
-                            <img src="{{ product.image }}" alt="Nothing">
+                            <img src="{{ product.image }}" alt="Nothing" style="height: 256px; object-fit: contain; border: 3px solid black">
                         </div>
 
                         <div class="card-body">
@@ -27,13 +48,11 @@
                         </div>
 
                         <div class="container">
-                            <div class="btn-group">
-                                <input type="number" name="amount{{ product.product }}"
+                                <input name="amount{{ product.product }}"
                                     id="Money{{ product.productId }}" placeholder="Amount of Money"
-                                    style="width: fit-content; height: 30px" value="{{ product.price }}" />
+                                    style="width: inherit; height: 30px" value="{{ product.price }}" />
                                 <button onclick="check('{{ product.productId }}')"
-                                    style="width: fit-content; height: fit-content;">Pay with Bitcoin</button>
-                            </div>
+                                    style="width: inherit; height: fit-content;">Pay with Bitcoin</button>
                             <b><span id="bitcoinpay{{ product.productId }}"></span></b>
                         </div>
                     </div>
@@ -59,6 +78,10 @@
             name: name,
             ImageName: n
         });
+        getAddress(address, n);
+    }
+
+    function getAddress(address,n){
         $('#task-form' + n,).on('submit', function (e) {
             e.preventDefault();
             if (i < 1) {
@@ -72,6 +95,7 @@
                         email: $('input[name=email]').val(),
                         name: $('input[name=name]').val(),
                         status: $('input[name=status]').val(),
+                        address: address,
                         csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
                     },
                     success: function () {
@@ -85,7 +109,6 @@
             }
         });
     }
-
 
 
     function check(n) {

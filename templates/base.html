@@ -20,6 +20,11 @@
         .col{
             display:flex;
         }
+        .center {
+            height: auto;
+            text-align: center;
+          }
+          
     </style>
     <script src="https://code.jquery.com/jquery-3.5.1.js" 
     integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" 
@@ -28,19 +33,7 @@
 
 </head>
 <body>
-    <!-- Image and text -->
-    <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-        <img src="{% static "img/logo.jpg" %}" width="30" height="30" class="d-inline-block align-top" alt="">
-        My NFT Image Store
-        </a>
-    </nav>
 
-    <p>My first page</p>
-
-    Increase the amount of money you want to pay with Bitcoin and see your name on the leader board
-    <br/>
-    <br/>
     {% block content %} {% endblock %}
 
 </body>
