@@ -1,0 +1,23 @@
+.navbar {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    padding: 0;
+    list-style: none;
+    
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc; 
+    margin-left: 0px;  
+}
+.navbar a {
+   display: inline-block;
+   text-align:center; 
+}
+table{
+    margin-top: 20px;
+    width: 100%;
+    border: 1px solid #ccc;
+    margin: 0;
+    padding: 0;
+}

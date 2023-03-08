@@ -30,11 +30,67 @@
     integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" 
       crossorigin="anonymous"></script>
     {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 </head>
 <body>
+    <nav class="navbar navbar-light bg-light" style="display:grid">
+        <div class="row">
+        <img src= 'https://cdn3d.iconscout.com/3d/premium/thumb/nft-logo-6708909-5526657.png' class="d-inline-block align-top col" style="width:100px">
+        <a class="navbar-brand col" style="text-align: center;" href="#">
+            My NFT Image Store
+        </a>
+        </div>
+    </nav>
+    <div class='row'>
+        <div class="col-9 jumbotron text-center">
 
-    {% block content %} {% endblock %}
+            {% if names %} 
+
+            <p style="background-color: green; color: white;"> {{ names.0.0 }} is the highest bidder of our website </p>
+            {% else %}
+            <p style="background-color: green; color: white;">  You can be the first person </p>
+            {% endif %}
+            
+            Increase the amount of money you want to pay with Bitcoin and see your name on the leader board
+    
+            <br/>
+            <br/>
+            
+            <div class="container center" style="justify-items: center;">
+                <input type="email" name="email" id="email" placeholder="Email Address" />
+                <input type="text" name="name" id="name" placeholder="Enter your name" />
+            </div>
+        </div> 
+
+
+ <div class="col-3 " style="justify-items: center;">
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">User</th>
+            <th scope="col">Money</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for k,v in names|slice:":3" %} 
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ k }}</td>
+                    <td>{{ v }}</td>
+                </tr>
+            {% endfor %}
+          
+        </tbody>
+      </table>
+ </div>
+</div>
+        {% block content %} {% endblock %}
+    
+
+
+
 
 </body>
 </html>

@@ -3,30 +3,7 @@
 
 {% block content %}
 {% load static %}
-<nav class="navbar navbar-light bg-light">
-    <img src= 'https://cdn3d.iconscout.com/3d/premium/thumb/nft-logo-6708909-5526657.png' class="d-inline-block align-top" style="width:100px">
-    <a class="navbar-brand" style="text-align: center;" href="#">
-        My NFT Image Store
-    </a>
-</nav>
-<div class="jumbotron text-lg-center">
 
-    {% if name %}
-    <p style="background-color: green; color: white;"> {{ name }} is the highest bidder of our website </p>
-    {% else %}
-    <p style="background-color: green; color: white;">  You can be the first person </p>
-    {% endif %}
-    
-    Increase the amount of money you want to pay with Bitcoin and see your name on the leader board
-    <br/>
-    <br/>
-    
-    
-    <div class="container center" style="justify-items: center;">
-        <input type="email" name="email" id="email" placeholder="Email Address" />
-        <input type="text" name="name" id="name" placeholder="Enter your name" />
-    </div>
-</div>
 
 <div class="album py-5 bg-light">
     <div class="container">

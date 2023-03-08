@@ -37,14 +37,10 @@ def home(request):
         user.MoneySpent=float(data['amount'])
         user.save()
 
-        print(data)
-
         return HttpResponse("Success")
     name=None
     if Invoice.objects.filter(status=2).exists():
         filteredset=Invoice.objects.filter(status=2)
-
-        print(filteredset)
 
         getset={x['buyer']:[] for x in filteredset.values('buyer','price')}
 
@@ -53,8 +49,10 @@ def home(request):
 
         for x in getset:
             getset[x]=sum(getset[x])
-        name=max(getset,key=getset.get)
-        print(getset)
-    return render(request,'index.html',context={'products':products,'data':data,'name':name})
+        
+        names=sorted(getset.items(), key=lambda x: x[1], reverse=True)
+        print(names[0])
+        
+    return render(request,'index.html',context={'products':products,'data':data,'names':names})
 
 
