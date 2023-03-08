@@ -25,11 +25,8 @@
                         </div>
 
                         <div class="container">
-                                <input name="amount{{ product.product }}"
-                                    id="Money{{ product.productId }}" placeholder="Amount of Money"
-                                    style="width: inherit; height: 30px" value="{{ product.price }}" />
-                                <button onclick="check('{{ product.productId }}')"
-                                    style="width: inherit; height: fit-content;">Pay with Bitcoin</button>
+                                <input name="amount{{ product.product }}" id="Money{{ product.productId }}" placeholder="Amount of Money" style="width: inherit; height: 30px" value="{{ product.price }}" type="number" step="any"/>
+                                <button type="submit" onclick="check('{{ product.productId }}')" style="width: inherit; height: fit-content;">Pay with Bitcoin</button>
                             <b><span id="bitcoinpay{{ product.productId }}"></span></b>
                         </div>
                     </div>
@@ -55,12 +52,9 @@
             name: name,
             ImageName: n
         });
-        getAddress(address, n);
-    }
-
-    function getAddress(address,n){
         $('#task-form' + n,).on('submit', function (e) {
             e.preventDefault();
+            console.log("i",i)
             if (i < 1) {
                 $.ajax({
                     type: 'POST',
@@ -72,7 +66,6 @@
                         email: $('input[name=email]').val(),
                         name: $('input[name=name]').val(),
                         status: $('input[name=status]').val(),
-                        address: address,
                         csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
                     },
                     success: function () {

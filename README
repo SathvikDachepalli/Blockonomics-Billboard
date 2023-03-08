@@ -1,0 +1,5 @@
+Technologies used here:
+Blockonomics API  for payments
+HTML, CSS for structure of the website
+
+Because we are using Django, we can take advantage of jinja structure and templates for a webpage can be utilized.

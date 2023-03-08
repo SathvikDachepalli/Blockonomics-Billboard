@@ -9,7 +9,6 @@ def home(request):
     print(request.method)
     products=NFTImages.objects.all().values()
     data=request.POST
-    print(data)
     if request.method == "POST" and 'pk' in request.POST:
         data = request.POST
         invoice=Invoice()
@@ -36,9 +35,8 @@ def home(request):
         user.email=data['email']
         user.MoneySpent=float(data['amount'])
         user.save()
-
         return HttpResponse("Success")
-    name=None
+    names=None
     if Invoice.objects.filter(status=2).exists():
         filteredset=Invoice.objects.filter(status=2)
 

@@ -43,7 +43,8 @@
         </div>
     </nav>
     <div class='row'>
-        <div class="col-9 jumbotron text-center">
+        {% with x=9 %}{% endwith %}
+        <div class="col{{ x }} jumbotron text-center flex-column" > 
 
             {% if names %} 
 
@@ -62,35 +63,33 @@
                 <input type="text" name="name" id="name" placeholder="Enter your name" />
             </div>
         </div> 
+        {% if names %}
+        <div class="col-3 " style="justify-items: center;">
+            <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Money</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for k,v in names|slice:":3" %} 
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ k }}</td>
+                            <td>{{ v }}</td>
+                        </tr>
+                    {% endfor %}
+                  
+                </tbody>
+              </table>
+         </div>
+        {% endif %}
+    </div>
 
 
- <div class="col-3 " style="justify-items: center;">
-    <table class="table">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">User</th>
-            <th scope="col">Money</th>
-          </tr>
-        </thead>
-        <tbody>
-            {% for k,v in names|slice:":3" %} 
-                <tr>
-                    <th scope="row">{{ forloop.counter }}</th>
-                    <td>{{ k }}</td>
-                    <td>{{ v }}</td>
-                </tr>
-            {% endfor %}
-          
-        </tbody>
-      </table>
- </div>
-</div>
         {% block content %} {% endblock %}
-    
-
-
-
 
 </body>
 </html>
